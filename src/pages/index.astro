@@ -1,0 +1,73 @@
+---
+import EmblaCarousel from 'embla-carousel';
+import Autoplay from 'embla-carousel-autoplay';
+import { onMount } from 'astro';
+
+const cards = [
+  {
+    image: 'https://images.squarespace-cdn.com/content/5f3537e0dc1cd21c88c39d93/7c9b02e2-e42e-48fe-9bef-51d0e886a464/Digital+promo2.jpg',
+    title: 'Digital kampanje',
+    tags: ['Innhold', 'Distribusjon']
+  },
+  {
+    image: 'https://images.squarespace-cdn.com/content/5f3537e0dc1cd21c88c39d93/a67e2b38-9679-49ce-b3c3-5251c795af10/web+design2.jpg',
+    title: 'Webdesign',
+    tags: ['Design', 'Utvikling']
+  },
+  {
+    image: 'https://images.squarespace-cdn.com/content/5f3537e0dc1cd21c88c39d93/6b929077-71da-4146-8a50-02f8374b980d/spisset+ra%CC%8Adgivning2.jpg',
+    title: 'Spisset rådgivning',
+    tags: ['Strategi', 'Analyse']
+  },
+  {
+    image: 'https://images.squarespace-cdn.com/content/5f3537e0dc1cd21c88c39d93/d0d54e11-45c1-45f3-9e41-6c0f2ee3e72f/grafisk+design.jpg',
+    title: 'Grafisk design',
+    tags: ['Visuell identitet']
+  },
+  {
+    image: 'https://images.squarespace-cdn.com/content/5f3537e0dc1cd21c88c39d93/921f68b9-c3cd-4b21-8d05-20c33634e780/KI+tjenester2.jpg',
+    title: 'KI-tjenester',
+    tags: ['Teknologi', 'AI']
+  },
+  {
+    image: 'https://images.squarespace-cdn.com/content/5f3537e0dc1cd21c88c39d93/07035891-6252-4f58-90dd-526a8fbface0/powerpoint+design2.jpg',
+    title: 'PowerPoint design',
+    tags: ['Presentasjon']
+  },
+  {
+    image: 'https://images.squarespace-cdn.com/content/5f3537e0dc1cd21c88c39d93/7d02f107-1f69-4a86-8642-3b3e7992ba37/Fysisk+promo2.jpg',
+    title: 'Fysisk promo',
+    tags: ['Trykk', 'Event']
+  }
+];
+
+onMount(() => {
+  const emblaNode = document.querySelector('.embla');
+  if (emblaNode) {
+    EmblaCarousel(emblaNode, { loop: true }, [Autoplay({ delay: 3000 })]);
+  }
+});
+---
+
+<main class="bg-black text-white w-full">
+  <section class="py-12">
+    <div class="overflow-hidden embla">
+      <div class="flex gap-6 px-6">
+        {cards.map((card) => (
+          <div class="relative flex-shrink-0 w-[320px] h-[480px] rounded-2xl overflow-hidden shadow-lg group transition-transform duration-500 hover:-translate-y-2">
+            <img src={card.image} alt={card.title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute bottom-0 p-4">
+              <h3 class="text-lg font-semibold mb-2">{card.title}</h3>
+              <div class="flex flex-wrap gap-2">
+                {card.tags.map(tag => (
+                  <span class="px-3 py-1 text-xs border border-white rounded-full">{tag}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</main>
