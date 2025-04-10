@@ -41,9 +41,9 @@ const cards = [
 <main class="bg-black text-white w-full">
   <section class="py-12">
     <div class="overflow-hidden embla">
-      <div class="flex gap-6 px-6">
+      <div class="flex gap-6 px-6 overflow-x-auto whitespace-nowrap scroll-smooth">
         {cards.map((card) => (
-          <div class="relative flex-shrink-0 w-[320px] h-[480px] rounded-2xl overflow-hidden shadow-lg group transition-transform duration-500 hover:-translate-y-2">
+          <div class="relative inline-block w-[320px] h-[480px] rounded-2xl overflow-hidden shadow-lg group transition-transform duration-500 hover:-translate-y-2 shrink-0">
             <img src={card.image} alt={card.title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
             <div class="absolute bottom-0 p-4">
@@ -60,6 +60,7 @@ const cards = [
     </div>
   </section>
 </main>
+
 
 <script type="module" is:inline>
   import EmblaCarousel from 'embla-carousel';
