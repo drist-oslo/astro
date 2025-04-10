@@ -56,11 +56,16 @@ const cards = [
         padding: 40px 0;
       }
 
+      .carousel-track-container {
+        overflow-x: auto;
+        scroll-behavior: smooth;
+      }
+
       .carousel-track {
         display: flex;
         gap: 20px;
         padding: 0 20px;
-        scroll-behavior: smooth;
+        width: max-content;
       }
 
       .carousel-card {
@@ -73,6 +78,7 @@ const cards = [
         box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         transition: transform 0.4s ease;
         background: #111;
+        cursor: pointer;
       }
 
       .carousel-card:hover {
@@ -96,6 +102,12 @@ const cards = [
         position: absolute;
         bottom: 0;
         padding: 16px;
+        transition: opacity 0.5s ease;
+        opacity: 0;
+      }
+
+      .carousel-card:hover .card-content {
+        opacity: 1;
       }
 
       .card-content h3 {
@@ -115,19 +127,21 @@ const cards = [
   </head>
   <body>
     <div class="carousel-wrapper">
-      <div class="carousel-track" id="carousel">
-        {cards.map((card) => (
-          <div class="carousel-card">
-            <img src={card.image} alt={card.title} />
-            <div class="card-overlay"></div>
-            <div class="card-content">
-              <h3>{card.title}</h3>
-              {card.tags.map(tag => (
-                <span class="tag">{tag}</span>
-              ))}
+      <div class="carousel-track-container">
+        <div class="carousel-track" id="carousel">
+          {cards.map((card) => (
+            <div class="carousel-card">
+              <img src={card.image} alt={card.title} />
+              <div class="card-overlay"></div>
+              <div class="card-content">
+                <h3>{card.title}</h3>
+                {card.tags.map(tag => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
 
@@ -136,9 +150,12 @@ const cards = [
       import Autoplay from 'embla-carousel-autoplay';
 
       window.addEventListener('DOMContentLoaded', () => {
-        EmblaCarousel(document.querySelector('.carousel-track'), {
+        const emblaNode = document.querySelector('.carousel-track-container');
+        EmblaCarousel(emblaNode, {
           loop: true
-        }, [Autoplay({ delay: 3000 })]);
+        }, [
+          Autoplay({ delay: 3000 })
+        ]);
       });
     </script>
   </body>
