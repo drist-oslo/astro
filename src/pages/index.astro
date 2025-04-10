@@ -38,40 +38,108 @@ const cards = [
 ];
 ---
 
-<main class="bg-black text-white w-full">
-  <section class="py-12">
-    <div class="overflow-hidden embla">
-      <div class="flex gap-6 px-6 overflow-x-auto whitespace-nowrap scroll-smooth">
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Karusell</title>
+    <style>
+      body {
+        margin: 0;
+        background: #000;
+        color: #fff;
+        font-family: sans-serif;
+      }
+
+      .carousel-wrapper {
+        overflow: hidden;
+        width: 100vw;
+        padding: 40px 0;
+      }
+
+      .carousel-track {
+        display: flex;
+        gap: 20px;
+        padding: 0 20px;
+        scroll-behavior: smooth;
+      }
+
+      .carousel-card {
+        flex: 0 0 auto;
+        width: 320px;
+        height: 480px;
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        transition: transform 0.4s ease;
+        background: #111;
+      }
+
+      .carousel-card:hover {
+        transform: translateY(-12px);
+        z-index: 10;
+      }
+
+      .carousel-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .card-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+      }
+
+      .card-content {
+        position: absolute;
+        bottom: 0;
+        padding: 16px;
+      }
+
+      .card-content h3 {
+        margin: 0 0 10px;
+        font-size: 18px;
+      }
+
+      .tag {
+        display: inline-block;
+        font-size: 12px;
+        padding: 4px 10px;
+        margin: 2px;
+        border: 1px solid white;
+        border-radius: 999px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carousel-wrapper">
+      <div class="carousel-track" id="carousel">
         {cards.map((card) => (
-          <div class="relative inline-block w-[320px] h-[480px] rounded-2xl overflow-hidden shadow-lg group transition-transform duration-500 hover:-translate-y-2 shrink-0">
-            <img src={card.image} alt={card.title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-            <div class="absolute bottom-0 p-4">
-              <h3 class="text-lg font-semibold mb-2">{card.title}</h3>
-              <div class="flex flex-wrap gap-2">
-                {card.tags.map(tag => (
-                  <span class="px-3 py-1 text-xs border border-white rounded-full">{tag}</span>
-                ))}
-              </div>
+          <div class="carousel-card">
+            <img src={card.image} alt={card.title} />
+            <div class="card-overlay"></div>
+            <div class="card-content">
+              <h3>{card.title}</h3>
+              {card.tags.map(tag => (
+                <span class="tag">{tag}</span>
+              ))}
             </div>
           </div>
         ))}
       </div>
     </div>
-  </section>
-</main>
 
+    <script type="module" is:inline>
+      import EmblaCarousel from 'embla-carousel';
+      import Autoplay from 'embla-carousel-autoplay';
 
-<script type="module" is:inline>
-  import EmblaCarousel from 'embla-carousel';
-  import Autoplay from 'embla-carousel-autoplay';
-
-  window.addEventListener('DOMContentLoaded', () => {
-    const embla = EmblaCarousel(document.querySelector('.embla > div'), {
-      loop: true
-    }, [
-      Autoplay({ delay: 3000 })
-    ]);
-  });
-</script>
-
+      window.addEventListener('DOMContentLoaded', () => {
+        EmblaCarousel(document.querySelector('.carousel-track'), {
+          loop: true
+        }, [Autoplay({ delay: 3000 })]);
+      });
+    </script>
+  </body>
+</html>
