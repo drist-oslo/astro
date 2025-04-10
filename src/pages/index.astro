@@ -1,8 +1,4 @@
 ---
-import EmblaCarousel from 'embla-carousel';
-import Autoplay from 'embla-carousel-autoplay';
-import { onMount } from 'astro';
-
 const cards = [
   {
     image: 'https://images.squarespace-cdn.com/content/5f3537e0dc1cd21c88c39d93/7c9b02e2-e42e-48fe-9bef-51d0e886a464/Digital+promo2.jpg',
@@ -40,13 +36,6 @@ const cards = [
     tags: ['Trykk', 'Event']
   }
 ];
-
-onMount(() => {
-  const emblaNode = document.querySelector('.embla');
-  if (emblaNode) {
-    EmblaCarousel(emblaNode, { loop: true }, [Autoplay({ delay: 3000 })]);
-  }
-});
 ---
 
 <main class="bg-black text-white w-full">
@@ -71,3 +60,14 @@ onMount(() => {
     </div>
   </section>
 </main>
+
+<script type="module" is:inline>
+  import EmblaCarousel from 'embla-carousel';
+  import Autoplay from 'embla-carousel-autoplay';
+
+  const embla = EmblaCarousel(document.querySelector('.embla'), {
+    loop: true
+  }, [
+    Autoplay({ delay: 3000 })
+  ]);
+</script>
