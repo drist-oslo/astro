@@ -41,7 +41,7 @@ const cards = [
 <html lang="no">
   <head>
     <meta charset="UTF-8" />
-    <title>Karusell</title>
+    <title>Embla Karusell</title>
     <style>
       body {
         margin: 0;
@@ -50,67 +50,63 @@ const cards = [
         font-family: sans-serif;
       }
 
-      .carousel-wrapper {
+      .embla {
         overflow: hidden;
         width: 100vw;
         padding: 40px 0;
       }
 
-      .carousel-track-container {
-        overflow-x: auto;
-        scroll-behavior: smooth;
+      .embla__viewport {
+        overflow: hidden;
+        width: 100%;
       }
 
-      .carousel-track {
+      .embla__container {
         display: flex;
         gap: 20px;
-        padding: 0 20px;
-        width: max-content;
       }
 
-      .carousel-card {
-        flex: 0 0 auto;
-        width: 320px;
+      .embla__slide {
+        position: relative;
+        flex: 0 0 320px;
         height: 480px;
         border-radius: 20px;
-        position: relative;
         overflow: hidden;
+        background: #111;
         box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         transition: transform 0.4s ease;
-        background: #111;
-        cursor: pointer;
       }
 
-      .carousel-card:hover {
+      .embla__slide:hover {
         transform: translateY(-12px);
         z-index: 10;
       }
 
-      .carousel-card img {
+      .embla__slide img {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
 
-      .card-overlay {
+      .overlay {
         position: absolute;
         inset: 0;
         background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
       }
 
-      .card-content {
+      .content {
         position: absolute;
         bottom: 0;
         padding: 16px;
-        transition: opacity 0.5s ease;
         opacity: 0;
+        transition: opacity 0.5s ease;
       }
 
-      .carousel-card:hover .card-content {
+      .embla__slide:hover .content {
         opacity: 1;
       }
 
-      .card-content h3 {
+      .content h3 {
         margin: 0 0 10px;
         font-size: 18px;
       }
@@ -126,14 +122,14 @@ const cards = [
     </style>
   </head>
   <body>
-    <div class="carousel-wrapper">
-      <div class="carousel-track-container">
-        <div class="carousel-track" id="carousel">
+    <div class="embla">
+      <div class="embla__viewport">
+        <div class="embla__container">
           {cards.map((card) => (
-            <div class="carousel-card">
+            <div class="embla__slide">
               <img src={card.image} alt={card.title} />
-              <div class="card-overlay"></div>
-              <div class="card-content">
+              <div class="overlay"></div>
+              <div class="content">
                 <h3>{card.title}</h3>
                 {card.tags.map(tag => (
                   <span class="tag">{tag}</span>
@@ -150,12 +146,9 @@ const cards = [
       import Autoplay from 'embla-carousel-autoplay';
 
       window.addEventListener('DOMContentLoaded', () => {
-        const emblaNode = document.querySelector('.carousel-track-container');
-        EmblaCarousel(emblaNode, {
+        const embla = EmblaCarousel(document.querySelector('.embla'), {
           loop: true
-        }, [
-          Autoplay({ delay: 3000 })
-        ]);
+        }, [Autoplay({ delay: 3000, stopOnInteraction: false })]);
       });
     </script>
   </body>
